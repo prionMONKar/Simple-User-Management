@@ -1,9 +1,17 @@
 <?php 
     include 'connection.php';
-    // session_start();
-    // if(!isset($_SESSION['user_name'])){
-    //     header('Location: login.php');
-    // }
+?>
+<?php 
+    session_start();
+    if(!isset($_SESSION['user_name'])){
+        header('Location: login.php');
+    }
+    if ($_SESSION['user_role'] != "Super Admin") {
+        $currentFile = $_SERVER['PHP_SELF'];
+        header("Location: $currentFile");
+        exit();
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">

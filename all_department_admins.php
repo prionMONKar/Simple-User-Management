@@ -1,6 +1,6 @@
 <?php include 'connection.php'; ?>
 <?php
-    $str2 = "select * from departments";
+    $str2 = "select * from users where role='Dept_Admin'";
     $q = mysqli_query($conn, $str2);
 ?>
 <?php 
@@ -20,7 +20,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Departments</title>
+    <title>All Departments Admins</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -28,11 +28,12 @@
 </head>
 <body>
     <div class="container">
-        <h2>All Departments</h2>
+        <h2>All Department Admins</h2>
         <table class="table table-striped">
             <thead>
                 <th>Name</th>
-                <th>Short Name</th>
+                <th>Email</th>
+                <th>Department</th>
                 <th>Action</th>
             </thead>
             <tbody>
@@ -40,9 +41,10 @@
                     while($r = mysqli_fetch_array($q)){ ?>
                         <tr>
                             <td><?php echo $r['name']; ?></td>
-                            <td><?php echo $r['short_name']; ?></td>
+                            <td><?php echo $r['email']; ?></td>
+                            <td><?php echo $r['department']; ?></td>
                             <td>
-                                <a class="btn btn-primary" href="edit_departments.php?tId=<?php echo $r['id'] ?>" >Edit</a>
+                                <a class="btn btn-primary" href="edit.php?tId=<?php echo $r['id'] ?>" >Edit</a>
                                 <a class="btn btn-secondary" data-toggle="modal" data-target="#myModal<?php echo $r['id']; ?>" >Delete</a>
                                 <div class="modal" id="myModal<?php echo $r['id']; ?>">
                                     <div class="modal-dialog">

@@ -1,13 +1,22 @@
 <?php include 'connection.php'; ?>
-<?php
+<?php 
     session_start();
     if(!isset($_SESSION['user_name'])){
         header('Location: login.php');
     }
+    if ($_SESSION['user_role'] != "Super Admin") {
+        $currentFile = $_SERVER['PHP_SELF'];
+        header("Location: $currentFile");
+        exit();
+    }
+    
 ?>
 <?php
     $str2 = "select * from departments";
     $q = mysqli_query($conn, $str2);
+
+    $str3 = "select * from users where role='Dept_Admin'";
+    $q1 = mysqli_query($conn, $str3);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +39,8 @@
                 <li><a class="dropdown-item" href="pending_users.php">Pending Users</a></li>
                 <li><a class="dropdown-item" href="create_department.php">Create Department</a></li>
                 <li><a class="dropdown-item" href="all_departments.php">Update Departments</a></li>
+                <li><a class="dropdown-item" href="create_department_admin.php">Create Department Admins</a></li>
+                <li><a class="dropdown-item" href="all_department_admins.php">Update Department Admins</a></li>
             </ul>
             <button type="button" class="btn btn-outline-primary"><a href="login.php">Sign Out</a></button>
         </div>
@@ -47,6 +58,26 @@
                         <tr>
                             <td><?php echo $r['name']; ?></td>
                             <td><?php echo $r['short_name']; ?></td>
+                        </tr>
+                    <?php }
+                ?>
+                
+            </tbody>
+        </table>
+        <h2>All Department Admins</h2>
+        <table class="table table-striped">
+            <thead>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+            </thead>
+            <tbody>
+                <?php 
+                    while($r1 = mysqli_fetch_array($q1)){ ?>
+                        <tr>
+                            <td><?php echo $r1['name']; ?></td>
+                            <td><?php echo $r1['email']; ?></td>
+                            <td><?php echo $r1['department']; ?></td>
                         </tr>
                     <?php }
                 ?>

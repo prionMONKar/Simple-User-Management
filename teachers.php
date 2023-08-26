@@ -3,12 +3,24 @@
     $str = "select * from users where role='Teacher'";
     $q = mysqli_query($conn, $str);
 ?>
+<?php 
+    session_start();
+    if(!isset($_SESSION['user_name'])){
+        header('Location: login.php');
+    }
+    if ($_SESSION['user_role'] != "Dept_Admin") {
+        $currentFile = $_SERVER['PHP_SELF'];
+        header("Location: $currentFile");
+        exit();
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Teachers</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -16,7 +28,8 @@
 </head>
 <body>
     <div class="container">
-        <h2>All Users</h2>
+    <button type="button" class="btn btn-outline-primary"><a href="dept_Admin_dashboard.php">Back to Dashboard</a></button>
+        <h2>All Teachers</h2>
         <table class="table table-striped">
             <thead>
                 <th>Name</th>
@@ -46,7 +59,7 @@
 
                                         <!-- Modal body -->
                                         <div class="modal-body">
-                                            Are you sure you want to delete <?php echo $r['Name']; ?> ?
+                                            Are you sure you want to delete <?php echo $r['name']; ?> ?
                                         </div>
 
                                         <!-- Modal footer -->

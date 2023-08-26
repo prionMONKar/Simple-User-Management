@@ -5,6 +5,18 @@
     $q = mysqli_query($conn, $s);
     $r = mysqli_fetch_assoc($q);
 ?>
+<?php 
+    session_start();
+    if(!isset($_SESSION['user_name'])){
+        header('Location: login.php');
+    }
+    if ($_SESSION['user_role'] != "Super Admin") {
+        $currentFile = $_SERVER['PHP_SELF'];
+        header("Location: $currentFile");
+        exit();
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,11 +41,24 @@
                 <label for="">Department</label>
                 <select name="department" class="form-control" id="">
                     <option value="">Select Department</option>
-                    <option <?php echo $r['department']=="CSE" ? 'selected': '' ?> value="CSE">Computer Science & Engineering</option>
-                    <option <?php echo $r['department']=="CE" ? 'selected': '' ?> value="CE">Civil Engineering</option>
-                    <option <?php echo $r['department']=="EEE" ? 'selected': '' ?> value="EEE">Electrical & Electronics Engineering</option>
-                    <option <?php echo $r['department']=="ME" ? 'selected': '' ?> value="ME">Mechanical Engineering</option>
+                    <?php
+                        $departmentQuery = "SELECT name,short_name FROM departments"; // Assuming 'departments' is your departments table
+                        $departmentResult = mysqli_query($conn, $departmentQuery);
+                        
+                        if ($departmentResult && mysqli_num_rows($departmentResult) > 0) {
+                            while ($departmentRow = mysqli_fetch_assoc($departmentResult)) {
+                                $departmentName = $departmentRow['name'];
+                                $departmentShortName = $departmentRow['short_name'];
+                                $selected = ($r['department'] == $departmentShortName) ? 'selected' : '';
+                                echo '<option ' . $selected . ' value="' . $departmentShortName . '">' . $departmentName . '</option>';
+                            }
+                        }
+                    ?>
                 </select>
+            </div>
+            <div class="form-group">
+                <label for="">Role</label>
+                <input type="text" name="role" class="form-control" value="<?php echo $r['role'] ?>" id="">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-secondary" name="submitBtn">Update</button>
@@ -46,17 +71,24 @@
     if(isset($_POST['submitBtn'])){
         $teacher_name = $_POST["name"];
         $teacher_email = $_POST["email"];
-        $teacher_salary = $_POST["salary"];
         $teacher_department = $_POST["department"];
+        $teacher_role = $_POST["role"];
 
         $str = "UPDATE users SET name='".$teacher_name."', 
-                    email='".$teacher_email."', 
-                    salary=$teacher_salary, 
-                    department='".$teacher_department."' 
+                    email='".$teacher_email."',
+                    department='".$teacher_department."',
+                    role='".$teacher_role."'
                     WHERE id=$r[id]";
 
         if(mysqli_query($conn, $str)){
-            header('Location: teachers.php');
+            $s1 = "Select role from users";
+            $q1 = mysqli_query($conn, $s1);
+            if($q1 == 'Dept_Admin'){
+                header('Location: all_department_admins.php');
+            }
+            else{
+                header('Location: teachers.php');
+            }
         }
     }
 

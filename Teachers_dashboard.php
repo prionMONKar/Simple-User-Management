@@ -3,9 +3,12 @@
     if(!isset($_SESSION['user_name'])){
         header('Location: login.php');
     }
-    if($_SESSION['user_role']!="Teacher"){
-        header('Location: Teachers_dashboard.php');
+    if ($_SESSION['user_role'] != "Teacher") {
+        $currentFile = $_SERVER['PHP_SELF'];
+        header("Location: $currentFile");
+        exit();
     }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">

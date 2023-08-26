@@ -1,19 +1,31 @@
 <?php 
     include 'connection.php';
 ?>
+<?php 
+    session_start();
+    if(!isset($_SESSION['user_name'])){
+        header('Location: login.php');
+    }
+    if ($_SESSION['user_role'] != "Super Admin") {
+        $currentFile = $_SERVER['PHP_SELF'];
+        header("Location: $currentFile");
+        exit();
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Teacher</title>
+    <title>Create Department Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <h2>Add a Teacher</h2>
+        <h2>Add a Department Admin</h2>
             <form method="POST">
                 <label for="">Name</label>
                 <input type="text" name="name" class="form-control" placeholder="Name" required></b>
@@ -49,7 +61,7 @@
                         <option value="Dept_Admin">Department Admin</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary" name="submitBtn">Create Teacher</button>
+                <button type="submit" class="btn btn-primary" name="submitBtn">Create Department Admin</button>
             </form>
     </div>
 </body>
@@ -68,7 +80,7 @@
             VALUES 
             ('".$name."', '".$email."', '".$department."', '".md5($password)."', '".$role."')";
             if(mysqli_query($conn, $str)){
-                header('Location: teachers.php');
+                header('Location: all_department_admins.php');
             }
         }
         else {

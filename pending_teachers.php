@@ -3,6 +3,18 @@
     $s = "select * from users where status=0 and role= 'Teacher'";
     $q = mysqli_query($conn, $s);
 ?>
+<?php 
+    session_start();
+    if(!isset($_SESSION['user_name'])){
+        header('Location: login.php');
+    }
+    if ($_SESSION['user_role'] != "Dept_Admin") {
+        $currentFile = $_SERVER['PHP_SELF'];
+        header("Location: $currentFile");
+        exit();
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

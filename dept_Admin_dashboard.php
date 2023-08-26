@@ -4,13 +4,17 @@
     if(!isset($_SESSION['user_name'])){
         header('Location: login.php');
     }
-    if($_SESSION['user_role']!="Dept_Admin"){
-        header('Location: dept_Admin_dashboard.php');
+    if ($_SESSION['user_role'] != "Dept_Admin") {
+        $currentFile = $_SERVER['PHP_SELF'];
+        header("Location: $currentFile");
+        exit();
     }
-?>
-<?php
-    $str2 = "select * from users where status=1 and role= 'Teacher'";
+    $user_department = $_SESSION['user_department'];
+
+    $str2 = "SELECT * FROM users WHERE status=1 AND role='Teacher' AND department='$user_department'";
     $q = mysqli_query($conn, $str2);
+    // $str2 = "select * from users where status=1 and role= 'Teacher' and department='ME'";
+    // $q = mysqli_query($conn, $str2);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,12 +28,14 @@
 </head>
 <body>
     <div class="container">
+        <h2>Department Admin Dashboard</h2>
         <div class="dropdown dropend">
             <button 
                 type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown">Menu
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="pending_teachers.php">Pending Teachers</a></li>
+                <li><a class="dropdown-item" href="teachers.php">Update Teacher</a></li>
                 <li><a class="dropdown-item" href="create_teachers.php">Create Teacher</a></li>
             </ul>
             <button type="button" class="btn btn-outline-primary"><a href="login.php">Sign Out</a></button>

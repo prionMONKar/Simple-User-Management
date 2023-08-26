@@ -23,6 +23,10 @@
             <div class="form-group">
                 <button type="submit" name="loginBtn" class="btn btn-primary">Login</button>
             </div>
+            <div>
+                <p>Don't have an account?</p>
+                <a href="index.php">Click Here</a>
+            </div>
         </form>
     </div>
 </body>
@@ -39,6 +43,7 @@
             if($status){
                 // save user data into session
                 $_SESSION['user_name'] = $r['name'];
+                $_SESSION['user_department'] = $r['department'];
                 $_SESSION['user_role'] = $r['role'];
                 if($_SESSION['user_role']=="Super Admin"){
                     header('Location: dashboard.php');
