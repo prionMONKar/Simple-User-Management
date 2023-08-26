@@ -1,6 +1,6 @@
 <?php include 'connection.php'; ?>
 <?php
-    $str = "select * from users";
+    $str = "select * from users where role='Teacher'";
     $q = mysqli_query($conn, $str);
 ?>
 <!DOCTYPE html>

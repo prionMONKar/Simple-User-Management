@@ -31,6 +31,7 @@
                 <li><a class="dropdown-item" href="create_department.php">Create Department</a></li>
                 <li><a class="dropdown-item" href="all_departments.php">Update Departments</a></li>
             </ul>
+            <button type="button" class="btn btn-outline-primary"><a href="login.php">Sign Out</a></button>
         </div>
     </div>
     <div class="container">

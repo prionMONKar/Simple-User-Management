@@ -23,10 +23,14 @@
                 <label for="">Department</label>
                 <select name="department" class="form-control" id="">
                     <option value="">Select Department</option>
-                    <option value="CSE">Computer Science & Engineering</option>
-                    <option value="CE">Civil Engineering</option>
-                    <option value="EEE">Electrical and Electronics Engineering</option>
-                    <option value="ME">Mechanical Engineering</option>
+                    <?php
+                    $departmentQuery = "SELECT name,short_name FROM departments";
+                    $departmentResult = mysqli_query($conn, $departmentQuery);
+                    
+                    while ($department = mysqli_fetch_assoc($departmentResult)) {
+                        echo '<option value="' . $department['short_name'] . '">' . $department['name'] . '</option>';
+                    }
+                    ?>
                 </select>
             </div>
             <div class="form-group">
