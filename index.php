@@ -52,6 +52,7 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" name="submitBtn">Save</button>
             </div>
+            <p>Already have an account?<a href="login.php">Click Here</a></p>
         </form>
     </div>
 </body>

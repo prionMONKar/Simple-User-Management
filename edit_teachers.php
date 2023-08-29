@@ -10,7 +10,7 @@
     if(!isset($_SESSION['user_name'])){
         header('Location: login.php');
     }
-    if ($_SESSION['user_role'] != "Super Admin") {
+    if ($_SESSION['user_role'] != "Dept_Admin") {
         $currentFile = $_SERVER['PHP_SELF'];
         header("Location: $currentFile");
         exit();
@@ -22,12 +22,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Department Admin</title>
+    <title>Edit Teacher</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container">
-        <h2>Edit Department Admin</h2>
+        <h2>Edit Teacher</h2>
         <form action="" method="post">
             <div class="form-group">
                 <label for="">Name</label>
@@ -84,7 +84,7 @@
             $s1 = "Select role from users";
             $q1 = mysqli_query($conn, $s1);
             if($q1 == 'Dept_Admin'){
-                header('Location: all_department_admins.php');
+                header('Location: teachers.php');
             }
             else{
                 header('Location: teachers.php');

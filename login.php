@@ -24,8 +24,7 @@
                 <button type="submit" name="loginBtn" class="btn btn-primary">Login</button>
             </div>
             <div>
-                <p>Don't have an account?</p>
-                <a href="index.php">Click Here</a>
+                <p>Don't have an account?<a href="index.php">Click Here</a></p>
             </div>
         </form>
     </div>

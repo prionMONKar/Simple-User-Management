@@ -37,6 +37,7 @@
                 <li><a class="dropdown-item" href="pending_teachers.php">Pending Teachers</a></li>
                 <li><a class="dropdown-item" href="teachers.php">Update Teacher</a></li>
                 <li><a class="dropdown-item" href="create_teachers.php">Create Teacher</a></li>
+                <li><a class="dropdown-item" href="session.php">Sessions</a></li>
             </ul>
             <button type="button" class="btn btn-outline-primary"><a href="login.php">Sign Out</a></button>
         </div>
